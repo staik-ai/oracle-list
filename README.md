@@ -1,6 +1,6 @@
 # multi-spot takes aggregated prices from multiple sources (see below)
 
-npm install web3 ethers
+npm install web3 ethers \
 node multi-spot.js
 
 
