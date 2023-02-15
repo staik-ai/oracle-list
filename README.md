@@ -1,5 +1,7 @@
 # multi-spot takes aggregated prices from multiple sources (see below)
 
+add infura key to script \
+run the following commands: \
 npm install web3 ethers \
 node multi-spot.js
 
