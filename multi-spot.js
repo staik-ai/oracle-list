@@ -2,7 +2,9 @@ const Web3 = require('web3');
 
 const { BigNumber } = require('ethers');
 
-// Infura Key + URL
+/////////////////////////////////////////////////////////////////////////////
+//////////////////// Infura Key + URL ///////////////////////////////////////
+
 const infuraKey = 'add_your_infura_key_here';
 const web3 = new Web3(`https://mainnet.infura.io/v3/${infuraKey}`);
 
@@ -18,6 +20,8 @@ const offChainOracleAddress = '0x07D91f5fb9Bf7798734C3f606dB065549F6893bb';
 
 const multiCallContract = new web3.eth.Contract(JSON.parse(MultiCallAbi), '0xda3c19c6fe954576707fa24695efb830d9cca1ca');
 const offChainOracleContract = new web3.eth.Contract(JSON.parse(OffChainOracleAbi));
+
+// Add, Remove, Edit token addresses as required /////////////////////////
 
 const tokens = [
   {
@@ -46,11 +50,20 @@ const tokens = [
     decimals: 18,
   },
   {
+    name: 'BNB',
+    address: '0xB8c77482e45F1F44dE1745F52C74426C631bDD52',
+    decimals: 18,
+  },
+  {
     name: 'SHIB',
     address: '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce',
     decimals: 18,
   },
-
+  {
+    name: 'BLUR',
+    address: '0x5283d291dbcf85356a21ba090e6db59121208b44',
+    decimals: 18,
+  },
 ];
 
 const callData = tokens.map((token) => ({
@@ -64,6 +77,7 @@ const callData = tokens.map((token) => ({
 multiCallContract.methods.multicall(callData).call()
   .then(({ results, success }) => {
     const prices = {};
+    let EthDollarValue;
     for (let i = 0; i < results.length; i++) {
       if (!success[i]) {
         continue;
@@ -78,15 +92,25 @@ multiCallContract.methods.multicall(callData).call()
         ethPrice: (price / 1e18).toFixed(10), // display to 10 decimals
         weiPrice: price.toString(),
       };
+      if (tokens[i].name === 'USDC') {
+        EthDollarValue = 1 / (price / 1e18);
+      }
+    }
+
+    // Add dollar price for each token
+    for (const [address, { name, ethPrice }] of Object.entries(prices)) {
+      const dollarPrice = EthDollarValue / (1 / ethPrice);
+      prices[address].dollarPrice = dollarPrice;
     }
 
     // display results in descending order (e.g. WBTC usually first)
     const sortedPrices = Object.entries(prices)
       .sort((a, b) => b[1].weiPrice - a[1].weiPrice);
 
-    console.log(Object.fromEntries(sortedPrices.map(([address, { name, ethPrice, weiPrice }]) => {
-      const shortenedAddress = address.slice(0, 4) + '...' + address.slice(-4);
-      return [`${tokens.find(token => token.address === address).name} (${shortenedAddress})`, { ethPrice, weiPrice }];
+    console.log(Object.fromEntries(sortedPrices.map(([address, { name, ethPrice, weiPrice, dollarPrice }]) => {
+      // const shortenedAddress = address.slice(0, 4) + '...' + address.slice(-4);
+      // return [`${name} (${shortenedAddress})`, { ethPrice, weiPrice, dollarPrice }];
+      return [`${name} (${address})`, { ethPrice, weiPrice, dollarPrice }];
     })));
   })
   .catch(console.log);
