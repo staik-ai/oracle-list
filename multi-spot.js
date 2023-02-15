@@ -50,8 +50,8 @@ const tokens = [
     decimals: 18,
   },
   {
-    name: 'BNB',
-    address: '0xB8c77482e45F1F44dE1745F52C74426C631bDD52',
+    name: 'LINK',
+    address: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
     decimals: 18,
   },
   {
