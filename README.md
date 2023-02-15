@@ -7,15 +7,16 @@ node multi-spot.js
 #
 
 OffchainOracle (aggregator contract) \
-https://etherscan.io/address/0x07D91f5fb9Bf7798734C3f606dB065549F6893bb#code \
-Multicall
-https://etherscan.io/address/0xda3c19c6fe954576707fa24695efb830d9cca1ca#code \
+https://etherscan.io/address/0x07D91f5fb9Bf7798734C3f606dB065549F6893bb#code
+
+Multicall \
+https://etherscan.io/address/0xda3c19c6fe954576707fa24695efb830d9cca1ca#code
 
 UniswapV2LikeOracle \
-https://etherscan.io/address/0x8dc76c16e90351C1574a3Eea5c5797C475eA7292#code \
+https://etherscan.io/address/0x8dc76c16e90351C1574a3Eea5c5797C475eA7292#code
 UniswapV2LikeOracle \
 https://etherscan.io/address/0x4749B35AE40897B40585633261c5f743730fE8BC#code
-UniswapV2LikeOracle
+UniswapV2LikeOracle \
 https://etherscan.io/address/0x37E440D480F8891B62cF61f2E36fB9503D1e3B57#code
 UniswapV2LikeOracle
 https://etherscan.io/address/0x45Daa24D246B7780E1877781efb10a889678670d#code
